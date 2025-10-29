@@ -3,25 +3,26 @@ version: 0.2
 phases:
   install:
     commands:
-      - echo Installing Terraform...
+      - echo "Installing Terraform..."
       - dnf install -y dnf-plugins-core
       - dnf config-manager --add-repo https://rpm.releases.hashicorp.com/AmazonLinux/hashicorp.repo
       - dnf install -y terraform
 
   build:
     commands:
-      - echo "Listing current directory contents:"
+      - echo "📁 Listing current directory contents:"
       - ls -R
-      - echo "Changing directory to the Terraform folder..."
-      - cd mlopsproj/terraform || cd terraform
-      - echo "Now inside:" && pwd && ls
-      - echo "Initializing Terraform..."
-      - terraform init
-      - echo "Checking format..."
+      - echo "🔄 Changing to Terraform configuration directory..."
+      # Navigate correctly depending on structure
+      - if [ -d "terraform" ]; then cd terraform; elif [ -d "mlopsproj/terraform" ]; then cd mlopsproj/terraform; fi
+      - echo "✅ Current directory:" && pwd && ls
+      - echo "🚀 Initializing Terraform..."
+      - terraform init -input=false
+      - echo "🧩 Checking Terraform format..."
       - terraform fmt -check
-      - echo "Planning Terraform deployment..."
+      - echo "🗺️ Planning Terraform deployment..."
       - terraform plan -input=false
-      # Uncomment below line after verifying it works
+      # Uncomment below after confirming the plan works fine
       # - terraform apply -auto-approve
 
 artifacts:
