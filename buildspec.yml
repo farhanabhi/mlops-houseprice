@@ -10,18 +10,20 @@ phases:
 
   build:
     commands:
-      - echo "Listing current directory contents..."
+      - echo "Current working directory:"
+      - pwd
+      - echo "Listing files recursively..."
       - ls -R
-      - echo "Changing directory to terraform..."
-      - cd terraform
+      - echo "Navigating to terraform folder..."
+      - cd $(find . -type d -name terraform | head -n 1)
       - echo "Now inside:" && pwd && ls
       - echo "Initializing Terraform..."
       - terraform init
-      - echo "Checking Terraform formatting..."
+      - echo "Checking format..."
       - terraform fmt -check
-      - echo "Planning Terraform deployment..."
+      - echo "Running terraform plan..."
       - terraform plan -input=false
-      # Uncomment after verification:
+      # Uncomment this after testing:
       # - terraform apply -auto-approve
 
 artifacts:
