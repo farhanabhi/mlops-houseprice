@@ -10,16 +10,19 @@ phases:
 
   build:
     commands:
-      - echo Entering Terraform directory...
-      - cd terraform
-      - echo Initializing Terraform...
+      - echo "Listing current directory contents:"
+      - ls -R
+      - echo "Changing directory to the Terraform folder..."
+      - cd mlopsproj/terraform || cd terraform
+      - echo "Now inside:" && pwd && ls
+      - echo "Initializing Terraform..."
       - terraform init
-      - echo Formatting Terraform files...
+      - echo "Checking format..."
       - terraform fmt -check
-      - echo Planning Terraform deployment...
+      - echo "Planning Terraform deployment..."
       - terraform plan -input=false
-      - echo Applying Terraform deployment...
-      - terraform apply -auto-approve
+      # Uncomment below line after verifying it works
+      # - terraform apply -auto-approve
 
 artifacts:
   files:
