@@ -1,0 +1,17 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+      - pip install -r src/requirements.txt
+  build:
+    commands:
+      - python src/train_model.py
+      - cd src
+      - zip -r9 ../lambda_payload.zip lambda_handler.py
+  post_build:
+    commands:
+      - aws s3 cp artifacts/model.pkl s3://$MODEL_S3_BUCKET/artifacts/model.pkl
+artifacts:
+  files:
+    - lambda_payload.zip
