@@ -12,18 +12,20 @@ phases:
     commands:
       - echo "Current working directory:"
       - pwd
-      - echo "Listing files recursively..."
+      - echo "Listing repository contents:"
       - ls -R
-      - echo "Navigating to terraform folder..."
-      - cd $(find . -type d -name terraform | head -n 1)
+      - echo "Changing to terraform directory..."
+      # Use an explicit path since terraform/ is in repo root
+      - cd terraform
       - echo "Now inside:" && pwd && ls
       - echo "Initializing Terraform..."
-      - terraform init
-      - echo "Checking format..."
+      - terraform init -input=false
+      - echo "Checking Terraform format..."
       - terraform fmt -check
-      - echo "Running terraform plan..."
-      - terraform plan -input=false
-      # Uncomment this after testing:
+      - echo "Planning Terraform deployment..."
+      - terraform validate
+      - terraform plan -input=false -no-color
+      # Uncomment below after confirming plan works
       # - terraform apply -auto-approve
 
 artifacts:
