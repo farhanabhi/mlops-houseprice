@@ -10,19 +10,18 @@ phases:
 
   build:
     commands:
-      - echo "📁 Listing current directory contents:"
+      - echo "Listing current directory contents..."
       - ls -R
-      - echo "🔄 Changing to Terraform configuration directory..."
-      # Navigate correctly depending on structure
-      - if [ -d "terraform" ]; then cd terraform; elif [ -d "mlopsproj/terraform" ]; then cd mlopsproj/terraform; fi
-      - echo "✅ Current directory:" && pwd && ls
-      - echo "🚀 Initializing Terraform..."
-      - terraform init -input=false
-      - echo "🧩 Checking Terraform format..."
+      - echo "Changing directory to terraform..."
+      - cd terraform
+      - echo "Now inside:" && pwd && ls
+      - echo "Initializing Terraform..."
+      - terraform init
+      - echo "Checking Terraform formatting..."
       - terraform fmt -check
-      - echo "🗺️ Planning Terraform deployment..."
+      - echo "Planning Terraform deployment..."
       - terraform plan -input=false
-      # Uncomment below after confirming the plan works fine
+      # Uncomment after verification:
       # - terraform apply -auto-approve
 
 artifacts:
